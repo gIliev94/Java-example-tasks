@@ -1,5 +1,7 @@
 import java.util.Scanner;
 
+// ZADACHA - Namirane na razstoqniq ot dadena tochka do nachaloto na koordinatnata sistema
+
 public class Work1_v2 {
 	//Overload metodi za izchislqvane na distanciqta ot dadena tochka do nachaloto na KS
 	public static double distance(double x1,
