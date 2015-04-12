@@ -1,6 +1,6 @@
 package zadacha;
 
-//Kratka realizaciq na obekti i nasledqvaniq
+//Kratka realizaciq na rabota s obekti i nasledqvaniq
 
 public class MainProgram {
 	 public static void main(String[]args){
