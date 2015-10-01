@@ -13,83 +13,96 @@ public class MainProgram {
 
 	SimplePhoneBook phoneBook = new SimplePhoneBook();
 
-	try (Scanner sc = new Scanner(System.in)) {
+	try (Scanner strScan = new Scanner(System.in); Scanner numScan = new Scanner(System.in)) {
 	    do {
-		System.out.println("Please select action (N, R, L, Q):");
+		System.out.print("Please select action (N, R, L, Q): ");
 
-		switch (sc.next().toUpperCase()) {
+		switch (strScan.nextLine().toUpperCase()) {
 
 		case "N":
 		    Contact contact = new Contact();
 
 		    System.out.print("Name: ");
-		    name = sc.nextLine();
+		    name = strScan.nextLine();
 		    contact.setName(name);
 
 		    System.out.print("Phone number: ");
-		    phone = sc.nextLine();
+		    phone = strScan.nextLine();
 		    contact.setPhone(phone);
 
 		    System.out.print("City: ");
-		    city = sc.nextLine();
+		    city = strScan.nextLine();
 		    contact.setCity(city);
 
-		    if (!phoneBook.save(contact)) {
-			System.out.println();
-
-			for (String errMsg : contact.getErrors()) {
-			    System.out.println(errMsg);
-			}
-			System.out.println("----------------------");
-		    } else {
-			System.out.println("New record with ID " + contact.getId() + " has been created!");
-			System.out.println("----------------------");
-		    }
-
+		    addContact(phoneBook, contact);
 		    break;
 
 		case "R":
-		    System.out.print("Record ID: ");
-		    int id = sc.nextInt();
+		    System.out.println("Record ID: ");
+		    // sc.reset();
+		    int id = numScan.nextInt();
 
-		    if (phoneBook.delete(id)) {
-			System.out.println("Record with ID " + id + " has been removed!");
-		    } else {
-			System.out.println("Record not found!");
-		    }
-		    System.out.println("----------------------");
+		    deleteContact(phoneBook, id);
+		    // sc.reset();
 		    break;
 
 		case "L":
 		    String sortChoice = "";
 		    List<Contact> contacts = phoneBook.getContacts();
 
-		    sortChoice = sc.next();
+		    sortChoice = strScan.nextLine();
 
-		    System.out.format("Records (%d):\n", contacts.size());
-
-		    if (sortChoice.startsWith(":")) {
-			phoneBook.list(sortChoice.substring(1, sortChoice.length() - 1));
-		    } else {
-			phoneBook.list();
-		    }
-
-		    System.out.println("----------------------");
+		    System.out.format("Records (%d):", contacts.size());
+		    listContacts(phoneBook, sortChoice);
 		    break;
 
 		case "Q":
+		    System.out.println("Bye! ");
 		    exit = true;
 		    break;
 
 		default:
-		    System.out.println("Make a valid choice!\n");
-		    System.out.println("----------------------");
+		    System.out.println("Make a valid choice! ");
+		    System.out.println("---------------------- ");
 		    break;
 		}
 	    } while (!exit);
 	} catch (Exception e) {
 	    e.printStackTrace();
 	}
+    }
+
+    private static void addContact(SimplePhoneBook phBook, Contact con) {
+	if (!phBook.save(con)) {
+	    System.out.println();
+
+	    for (String errMsg : con.getErrors()) {
+		System.out.println(errMsg);
+	    }
+	    System.out.println("---------------------- ");
+	} else {
+	    System.out.println("New record with ID " + con.getId() + " has been created! ");
+	    System.out.println("---------------------- ");
+	}
+    }
+
+    private static void deleteContact(SimplePhoneBook phBook, int id) {
+	if (phBook.delete(id)) {
+	    System.out.println("Record with ID " + id + " has been removed! ");
+	} else {
+	    System.out.println("Record not found! ");
+	}
+	System.out.println("---------------------- ");
+    }
+
+    private static void listContacts(SimplePhoneBook phBook, String inputColumn) {
+	if (inputColumn.startsWith(":")) {
+	    phBook.list(inputColumn.substring(1));
+	} else {
+	    phBook.list();
+	}
+
+	System.out.println("---------------------- ");
     }
 
     // това вече в истинско приложение отива към view-то

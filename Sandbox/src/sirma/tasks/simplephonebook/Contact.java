@@ -18,7 +18,7 @@ public class Contact {
 
     // @TODO тук трябва да е някъв мап с ключ name=>null или "Name is required",
     // демек полето ти е ключа, а грешката ти е value
-    
+
     // Ne vijdam zashto mi e map v sluchaq kato moje da si pazq prosto v
     // list greshkite, i bez tva sa si vurzani za konkretniq Contact taka shot
     // sa pole
@@ -28,25 +28,35 @@ public class Contact {
 	RuleSet restrictions = new RuleSet();
 	boolean hasNoErrors = true;
 
-	if (this.name.equals("") || this.phone.equals("")) {
-	    this.errors.add("You have to input name and phone!");
-	    hasNoErrors = false;
-	} else {
+	hasNoErrors = checkNamePhone();
 
-	    if (this.name.length() > restrictions.getNAME_CITY_MAXLENGTH()
-		    || this.city.length() > restrictions.getNAME_CITY_MAXLENGTH()) {
-		this.errors.add("Name or city can`t be over " + restrictions.getNAME_CITY_MAXLENGTH() + " characters!");
-		hasNoErrors = false;
-	    }
-
-	    if (this.phone.length() < restrictions.getPHONE_MINLENGTH()
-		    || this.phone.length() > restrictions.getPHONE_MAXLENGTH()) {
-		this.errors.add("Phone number should be between " + restrictions.getPHONE_MINLENGTH() + " and "
-			+ restrictions.getPHONE_MAXLENGTH() + " digits!");
-		hasNoErrors = false;
-	    }
+	if (hasNoErrors) {
+	    hasNoErrors = checkLength(restrictions);
 	}
 	return hasNoErrors;
+    }
+
+    private boolean checkNamePhone() {
+	if (this.name.equals("") || this.phone.equals("")) {
+	    this.errors.add("Error: You have to input both name and phone!");
+	    return false;
+	}
+	return true;
+    }
+
+    private boolean checkLength(RuleSet rules) {
+	if (this.name.length() > rules.getNAME_CITY_MAXLENGTH()
+		|| this.city.length() > rules.getNAME_CITY_MAXLENGTH()) {
+	    this.errors.add("Error: Name or city can`t be over " + rules.getNAME_CITY_MAXLENGTH() + " characters!");
+	    return false;
+	}
+
+	if (this.phone.length() < rules.getPHONE_MINLENGTH() || this.phone.length() > rules.getPHONE_MAXLENGTH()) {
+	    this.errors.add("Error: Phone number should be between " + rules.getPHONE_MINLENGTH() + " and "
+		    + rules.getPHONE_MAXLENGTH() + " digits!");
+	    return false;
+	}
+	return true;
     }
 
     public int getId() {

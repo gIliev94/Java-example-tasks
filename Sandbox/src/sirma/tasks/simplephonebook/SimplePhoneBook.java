@@ -3,7 +3,6 @@ package sirma.tasks.simplephonebook;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Stack;
 
 /*
  * Това ти е 1 вид ContactRepository има за цел да управлява контактите, във всеки
@@ -20,10 +19,10 @@ public class SimplePhoneBook {
 	if (!contact.validate()) {
 	    return false;
 	} else if (!this.checkIsUniqueName(contact)) {
-	    contact.getErrors().add("A record with such name already exists!");
+	    contact.getErrors().add("Error: A record with such name already exists!");
 	    return false;
 	} else if (!this.checkIsUniquePhone(contact)) {
-	    contact.getErrors().add("A record with such number already exists!");
+	    contact.getErrors().add("Error: A record with such number already exists!");
 	    return false;
 	}
 	contact.setId(generateId());
@@ -40,22 +39,29 @@ public class SimplePhoneBook {
     }
 
     void list() {
-	Stack<Contact> printStack = new Stack<>();
-	printStack.addAll(this.contacts);
+	// Stack<Contact> printStack = new Stack<>(); moje bi
+	Collections.reverse(this.contacts);
 
-	for (Contact c : printStack) {
-	    printContactInfo(c);
-	}
+	printStandartly();
     }
 
     public void list(String column) {
 
+	sortByUserInput(column);
+
+	if (column.endsWith("!")) {
+	    list();
+	} else {
+	    printStandartly();
+	}
+    }
+
+    private void sortByUserInput(String col) {
 	Collections.sort(this.contacts, new Comparator<Contact>() {
 	    @Override
 	    public int compare(Contact c1, Contact c2) {
 		int result;
-
-		switch (column.substring(0, column.length() - 1)) {
+		switch (col.substring(0, col.length() - 2)) {
 
 		case "name":
 		    result = (c1.getName()).compareToIgnoreCase(c2.getName());
@@ -76,10 +82,13 @@ public class SimplePhoneBook {
 		return result;
 	    }
 	});
+    }
 
-	if (column.endsWith("!")) {
-	    Collections.reverse(this.contacts);
+    private void printStandartly() {
+	for (Contact c : this.contacts) {
+	    formatContactInfo(c);
 	}
+	System.out.println();
     }
 
     private boolean checkIsUniqueName(Contact con) {
@@ -99,8 +108,8 @@ public class SimplePhoneBook {
 	return true;
     }
 
-    void printContactInfo(Contact c) {
-	System.out.format("[%d] %s %s (%s)", c.getId(), c.getPhone(), c.getName(), c.getCity());
+    void formatContactInfo(Contact c) {
+	System.out.format("\n[%d] %s %s (%s)", c.getId(), c.getPhone(), c.getName(), c.getCity());
     }
 
     private int generateId() {
@@ -109,11 +118,6 @@ public class SimplePhoneBook {
 
     public ArrayList<Contact> getContacts() {
 	return contacts;
-    }
-
-    // Nqma da trqbva mai
-    public void setContacts(ArrayList<Contact> contacts) {
-	this.contacts = contacts;
     }
 
 }
