@@ -3,28 +3,27 @@ package sirma.tasks.simplephonebook;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
+import java.util.ListIterator;
 
-/*
- * Това ти е 1 вид ContactRepository има за цел да управлява контактите, във всеки
- * проект тука са ти getAll(), getById(), save(), update(), е такива дето бачкат с 
- * базата, в случая нямаш база но идеята е същата, пак се пазат в рамта.
- */
 public class SimplePhoneBook {
-    private int id = 1;
 
-    private ArrayList<Contact> contacts = new ArrayList<>();
+    private int id = 1;
+    private List<Contact> contacts = new ArrayList<>();
+
+    public List<Contact> getContacts() {
+	return contacts;
+    }
+
+    private int generateId() {
+	return id++;
+    }
 
     boolean save(Contact contact) {
-
 	if (!contact.validate()) {
 	    return false;
-	} else if (!this.checkIsUniqueName(contact)) {
-	    contact.getErrors().add("Error: A record with such name already exists!");
-	    return false;
-	} else if (!this.checkIsUniquePhone(contact)) {
-	    contact.getErrors().add("Error: A record with such number already exists!");
-	    return false;
 	}
+
 	contact.setId(generateId());
 	this.contacts.add(contact);
 	return true;
@@ -39,29 +38,43 @@ public class SimplePhoneBook {
     }
 
     void list() {
-	// Stack<Contact> printStack = new Stack<>(); moje bi
-	Collections.reverse(this.contacts);
+	ListIterator<Contact> li = this.contacts.listIterator(this.contacts.size());
 
-	printStandartly();
-    }
-
-    public void list(String column) {
-
-	sortByUserInput(column);
-
-	if (column.endsWith("!")) {
-	    list();
-	} else {
-	    printStandartly();
+	while (li.hasPrevious()) {
+	    formatContactInfo(li.previous());
 	}
+	System.out.println();
     }
 
-    private void sortByUserInput(String col) {
+    void listByCriteria(String column) {
+	sortByCriteria(column);
+	printContactsInfo();
+    }
+
+    private void printContactsInfo() {
+	for (Contact c : this.contacts) {
+	    formatContactInfo(c);
+	}
+	System.out.println();
+    }
+
+    private void formatContactInfo(Contact c) {
+	String printCity = "";
+
+	if (!c.getCity().equals("")) {
+	    printCity = "(" + c.getCity() + ")";
+	}
+	System.out.format("\n[%d] %s %s %s", c.getId(), c.getPhone(), c.getName(), printCity);
+	printCity = "";
+    }
+
+    private void sortByCriteria(String col) {
 	Collections.sort(this.contacts, new Comparator<Contact>() {
 	    @Override
 	    public int compare(Contact c1, Contact c2) {
 		int result;
-		switch (col.substring(0, col.length() - 2)) {
+
+		switch (col) {
 
 		case "name":
 		    result = (c1.getName()).compareToIgnoreCase(c2.getName());
@@ -73,6 +86,27 @@ public class SimplePhoneBook {
 
 		case "city":
 		    result = (c1.getCity()).compareToIgnoreCase(c2.getCity());
+
+		    if (c1.getCity().equals("")) {
+			result = 1;
+		    }
+
+		    if (c2.getCity().equals("")) {
+			result = -1;
+		    }
+
+		    break;
+
+		case "name!":
+		    result = (c2.getName()).compareToIgnoreCase(c1.getName());
+		    break;
+
+		case "phone!":
+		    result = (c2.getPhone()).compareToIgnoreCase(c1.getPhone());
+		    break;
+
+		case "city!":
+		    result = (c2.getCity()).compareToIgnoreCase(c1.getCity());
 		    break;
 
 		default:
@@ -84,40 +118,23 @@ public class SimplePhoneBook {
 	});
     }
 
-    private void printStandartly() {
+    boolean notUniqueName(String name) {
 	for (Contact c : this.contacts) {
-	    formatContactInfo(c);
-	}
-	System.out.println();
-    }
-
-    private boolean checkIsUniqueName(Contact con) {
-	for (Contact c : this.contacts) {
-	    if (c.getCity().equals(con.getCity()) && c.getName().equals(con.getName())) {
-		return false;
+	    if (c.getName().equalsIgnoreCase(name) || c.getName().equalsIgnoreCase(name.trim())) {
+		System.out.println("Error: A record with such name already exists!");
+		return true;
 	    }
 	}
-	return true;
+	return false;
     }
 
-    private boolean checkIsUniquePhone(Contact con) {
+    boolean notUniquePhone(String phone) {
 	for (Contact c : this.contacts) {
-	    if (c.getPhone().equals(con.getPhone()))
-		return false;
+	    if (c.getPhone().equalsIgnoreCase(phone) || c.getPhone().equalsIgnoreCase(phone.trim())) {
+		System.out.println("Error: A record with such phone number already exists!");
+		return true;
+	    }
 	}
-	return true;
+	return false;
     }
-
-    void formatContactInfo(Contact c) {
-	System.out.format("\n[%d] %s %s (%s)", c.getId(), c.getPhone(), c.getName(), c.getCity());
-    }
-
-    private int generateId() {
-	return id++;
-    }
-
-    public ArrayList<Contact> getContacts() {
-	return contacts;
-    }
-
 }

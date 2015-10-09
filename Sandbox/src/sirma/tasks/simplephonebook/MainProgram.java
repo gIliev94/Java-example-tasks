@@ -1,63 +1,60 @@
 package sirma.tasks.simplephonebook;
 
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
 public class MainProgram {
 
     public static void main(String[] args) {
-	String name = "";
-	String phone = "";
-	String city = "";
+	
 	boolean exit = false;
-
+	String choice = "";
+	Scanner strScan = new Scanner(System.in);
+	Scanner numScan = new Scanner(System.in);
 	SimplePhoneBook phoneBook = new SimplePhoneBook();
 
-	try (Scanner strScan = new Scanner(System.in); Scanner numScan = new Scanner(System.in)) {
+	try {
 	    do {
 		System.out.print("Please select action (N, R, L, Q): ");
+		choice = strScan.nextLine().toLowerCase();
 
-		switch (strScan.nextLine().toUpperCase()) {
+		switch (choice) {
 
-		case "N":
+		case "n":
 		    Contact contact = new Contact();
 
-		    System.out.print("Name: ");
-		    name = strScan.nextLine();
-		    contact.setName(name);
-
-		    System.out.print("Phone number: ");
-		    phone = strScan.nextLine();
-		    contact.setPhone(phone);
-
-		    System.out.print("City: ");
-		    city = strScan.nextLine();
-		    contact.setCity(city);
+		    inputName(contact, phoneBook, strScan);
+		    inputPhone(contact, phoneBook, strScan);
+		    inputCity(contact, phoneBook, strScan);
 
 		    addContact(phoneBook, contact);
 		    break;
 
-		case "R":
-		    System.out.println("Record ID: ");
-		    // sc.reset();
+		case "r":
+		    System.out.print("Record ID: ");
 		    int id = numScan.nextInt();
 
 		    deleteContact(phoneBook, id);
-		    // sc.reset();
 		    break;
 
-		case "L":
-		    String sortChoice = "";
+		case "l":
+		case "l:name":
+		case "l:phone":
+		case "l:city":
+		case "l:name!":
+		case "l:phone!":
+		case "l:city!":
 		    List<Contact> contacts = phoneBook.getContacts();
 
-		    sortChoice = strScan.nextLine();
-
 		    System.out.format("Records (%d):", contacts.size());
-		    listContacts(phoneBook, sortChoice);
+		    listContacts(phoneBook, choice.substring(1));
 		    break;
 
-		case "Q":
+		case "q":
 		    System.out.println("Bye! ");
+		    numScan.close();
+		    strScan.close();
 		    exit = true;
 		    break;
 
@@ -67,15 +64,47 @@ public class MainProgram {
 		    break;
 		}
 	    } while (!exit);
+	} catch (InputMismatchException ime) {
+	    System.out.println("Bad input: IDs are numbers!!!");
 	} catch (Exception e) {
-	    e.printStackTrace();
+	    System.out.println("Something went wrong:" + e.getMessage());
 	}
+    }
+
+    private static void inputName(Contact c, SimplePhoneBook pBook, Scanner strSc) {
+	String name = "";
+
+	do {
+	    System.out.print("Name: ");
+	    name = strSc.nextLine();
+
+	} while (pBook.notUniqueName(name));
+
+	c.setName(name);
+    }
+
+    private static void inputPhone(Contact c, SimplePhoneBook pBook, Scanner strSc) {
+	String phone = "";
+
+	do {
+	    System.out.print("Phone number: ");
+	    phone = strSc.nextLine();
+
+	} while (pBook.notUniquePhone(phone));
+	c.setPhone(phone);
+    }
+
+    private static void inputCity(Contact c, SimplePhoneBook pBook, Scanner strSc) {
+	String city = "";
+
+	System.out.print("City: ");
+	city = strSc.nextLine();
+	c.setCity(city);
     }
 
     private static void addContact(SimplePhoneBook phBook, Contact con) {
 	if (!phBook.save(con)) {
-	    System.out.println();
-
+	    System.out.println();   
 	    for (String errMsg : con.getErrors()) {
 		System.out.println(errMsg);
 	    }
@@ -97,20 +126,10 @@ public class MainProgram {
 
     private static void listContacts(SimplePhoneBook phBook, String inputColumn) {
 	if (inputColumn.startsWith(":")) {
-	    phBook.list(inputColumn.substring(1));
+	    phBook.listByCriteria(inputColumn.substring(1));
 	} else {
 	    phBook.list();
 	}
-
 	System.out.println("---------------------- ");
     }
-
-    // това вече в истинско приложение отива към view-то
-    // репото в реални случаи не трябва да има 1 стринг в него,
-    // всичко там е с обекти, а декорацията се случва другаде,
-    // в случая чак view няма смисъл, затова го пляскам в main
-    // защото формата е специфичен да кажем за конзолното приложение
-    // в случай че ни трябва да стане и java GUI phoneBook-a и Contact
-    // класовете са ни напълно използваеми и валидни, а формата си стои само
-    // тука
 }

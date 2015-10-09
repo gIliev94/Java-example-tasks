@@ -1,14 +1,8 @@
 package sirma.tasks.simplephonebook;
 
 import java.util.ArrayList;
+import java.util.List;
 
-/*
- * Това из патерните се води Entity демек 1 логическа единица, почти винаги 
- * ти е ORM случая дето отговаря на 1 таблица, и има колоните от тая таблица като
- * полета на класа. Тук е мястото да се правят и разни <a> методи за самия контакта
- * Принципно моята логика е че контакта не трябва да знае за същестуването на другите контакти,
- * затова е репозиторито(PhoneBook),затова и там се генерират id,там се проверява и за дубликати 
- */
 public class Contact {
 
     private int id;
@@ -16,27 +10,24 @@ public class Contact {
     private String phone;
     private String city;
 
-    // @TODO тук трябва да е някъв мап с ключ name=>null или "Name is required",
-    // демек полето ти е ключа, а грешката ти е value
-
-    // Ne vijdam zashto mi e map v sluchaq kato moje da si pazq prosto v
-    // list greshkite, i bez tva sa si vurzani za konkretniq Contact taka shot
-    // sa pole
-    private ArrayList<String> errors = new ArrayList<>();
+    private List<String> errors = new ArrayList<>();
 
     boolean validate() {
-	RuleSet restrictions = new RuleSet();
-	boolean hasNoErrors = true;
-
-	hasNoErrors = checkNamePhone();
-
-	if (hasNoErrors) {
-	    hasNoErrors = checkLength(restrictions);
+	if (!checkForNamePhone()) {
+	    return false;
 	}
-	return hasNoErrors;
+
+	checkPhoneIntegrity();
+	checkCityIntegrity();
+	checkLength();
+
+	if (!this.errors.isEmpty()) {
+	    return false;
+	}
+	return true;
     }
 
-    private boolean checkNamePhone() {
+    private boolean checkForNamePhone() {
 	if (this.name.equals("") || this.phone.equals("")) {
 	    this.errors.add("Error: You have to input both name and phone!");
 	    return false;
@@ -44,19 +35,42 @@ public class Contact {
 	return true;
     }
 
-    private boolean checkLength(RuleSet rules) {
+    private boolean checkPhoneIntegrity() {
+	for (Character c : this.phone.toCharArray()) {
+	    if (!Character.isDigit(c)) {
+		this.errors.add("Error: Phone number can contain only digits!");
+		return false;
+	    }
+	}
+	return true;
+    }
+
+    private boolean checkCityIntegrity() {
+	for (Character c : this.city.toCharArray()) {
+	    if (!Character.isAlphabetic(c)) {
+		this.errors.add("Error: City can contain only letters!");
+		return false;
+	    }
+	}
+	return true;
+    }
+
+    private boolean checkLength() {
+	RuleSet rules = new RuleSet();
+	boolean isFine = true;
+
 	if (this.name.length() > rules.getNAME_CITY_MAXLENGTH()
 		|| this.city.length() > rules.getNAME_CITY_MAXLENGTH()) {
 	    this.errors.add("Error: Name or city can`t be over " + rules.getNAME_CITY_MAXLENGTH() + " characters!");
-	    return false;
+	    isFine = false;
 	}
 
 	if (this.phone.length() < rules.getPHONE_MINLENGTH() || this.phone.length() > rules.getPHONE_MAXLENGTH()) {
 	    this.errors.add("Error: Phone number should be between " + rules.getPHONE_MINLENGTH() + " and "
 		    + rules.getPHONE_MAXLENGTH() + " digits!");
-	    return false;
+	    isFine = false;
 	}
-	return true;
+	return isFine;
     }
 
     public int getId() {
@@ -91,13 +105,7 @@ public class Contact {
 	this.city = city;
     }
 
-    public ArrayList<String> getErrors() {
+    public List<String> getErrors() {
 	return errors;
     }
-
-    // nqma da trqbva mai
-    public void setErrors(ArrayList<String> errors) {
-	this.errors = errors;
-    }
-
 }
