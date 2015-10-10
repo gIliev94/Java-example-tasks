@@ -1,9 +1,9 @@
 package sirma.tasks.letterfrequency;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -14,7 +14,6 @@ public final class LetterFrequencyFinder {
 
     public static final int PRINT_LIMIT = 20;
     public static final int MAXIMUM_HASHTAGS = 20;
-    private static int highestCharFrequency;
 
     public static void main(String[] args) {
 
@@ -38,7 +37,6 @@ public final class LetterFrequencyFinder {
 	    }
 
 	    outputMap = sortValuesDescending(charMap);
-	    highestCharFrequency = outputMap.values().iterator().next();
 
 	    System.out.println("\nMost frequent letters are:");
 	    limitPrinting(outputMap);
@@ -55,7 +53,7 @@ public final class LetterFrequencyFinder {
     private static <K, V extends Comparable<? super V>> Map<Character, Integer> sortValuesDescending(
 	    Map<Character, Integer> map) {
 
-	List<Map.Entry<Character, Integer>> list = new LinkedList<>(map.entrySet());
+	List<Map.Entry<Character, Integer>> list = new ArrayList<>(map.entrySet());
 	Map<Character, Integer> resultMap = new LinkedHashMap<>();
 
 	Collections.sort(list, new Comparator<Map.Entry<Character, Integer>>() {
@@ -74,8 +72,11 @@ public final class LetterFrequencyFinder {
     private static void limitPrinting(Map<Character, Integer> outMap) {
 
 	int printCounter = 0;
-	int currentFrequency;
-	int currentHashtags;
+	int highestCharFrequency = 0;
+	int currentFrequency = 0;
+	int currentHashtags = 0;
+
+	highestCharFrequency = outMap.values().iterator().next();
 
 	for (Map.Entry<Character, Integer> entry : outMap.entrySet()) {
 

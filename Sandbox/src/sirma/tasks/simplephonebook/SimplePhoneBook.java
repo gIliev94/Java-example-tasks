@@ -65,7 +65,6 @@ public class SimplePhoneBook {
 	    printCity = "(" + c.getCity() + ")";
 	}
 	System.out.format("\n[%d] %s %s %s", c.getId(), c.getPhone(), c.getName(), printCity);
-	printCity = "";
     }
 
     private void sortByCriteria(String col) {
