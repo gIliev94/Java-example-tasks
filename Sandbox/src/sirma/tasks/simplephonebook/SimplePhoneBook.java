@@ -23,7 +23,6 @@ public class SimplePhoneBook {
 	if (!contact.validate()) {
 	    return false;
 	}
-
 	contact.setId(generateId());
 	this.contacts.add(contact);
 	return true;
