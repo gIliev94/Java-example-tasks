@@ -43,15 +43,15 @@ public class NumberReportProblem {
     }
 
     private static List<Integer> findDividables(List<Integer> list, int divider) {
-	Set<Integer> dividableBy3 = new HashSet<>();
+	Set<Integer> dividableByX = new HashSet<>();
 
 	for (int i = 0; i < list.size(); i++) {
 	    if (list.get(i) % divider == 0) {
-		dividableBy3.add(list.get(i));
+		dividableByX.add(list.get(i));
 	    }
 	}
 
-	return new ArrayList<>(dividableBy3);
+	return new ArrayList<>(dividableByX);
     }
 
     private static List<Integer> initList(List<Integer> list) {
