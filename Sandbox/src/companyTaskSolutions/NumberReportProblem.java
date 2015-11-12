@@ -28,18 +28,19 @@ public class NumberReportProblem {
     }
 
     private static void printReport(List<Integer> list) {
-	int temp = 0;
+	int average = 0;
+
 	System.out.println("Count is: " + list.size());
 
-	temp = calcAvg(list);
-	System.out.println("Average is: " + temp);
+	average = calculateAverage(list);
+	System.out.println("Average is: " + average);
 
 	Collections.sort(list);
 
 	System.out.println("Minimum is: " + list.get(0));
 	System.out.println("Maximum is: " + list.get(list.size() - 1));
 
-	System.out.println("Standart deviation is: " + calcDeviation(list, temp));
+	System.out.println("Standart deviation is: " + calculateDeviation(list, average));
     }
 
     private static List<Integer> findDividables(List<Integer> list, int divider) {
@@ -69,7 +70,7 @@ public class NumberReportProblem {
 	return list;
     }
 
-    private static int calcAvg(List<Integer> list) {
+    private static int calculateAverage(List<Integer> list) {
 	int numbersSum = 0;
 
 	for (int i = 0; i < list.size(); i++) {
@@ -79,11 +80,11 @@ public class NumberReportProblem {
 	return numbersSum / list.size();
     }
 
-    private static int calcDeviation(List<Integer> list, int average) {
+    private static int calculateDeviation(List<Integer> list, int avg) {
 	int deviationSum = 0;
 
 	for (int i = 0; i < list.size(); i++) {
-	    deviationSum += Math.pow((list.get(i) - average), 2) / list.size();
+	    deviationSum += Math.pow((list.get(i) - avg), 2) / list.size();
 	}
 
 	return (int) Math.sqrt(deviationSum);
