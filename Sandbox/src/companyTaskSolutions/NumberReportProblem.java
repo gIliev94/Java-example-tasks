@@ -11,6 +11,7 @@ public class NumberReportProblem {
     public static void main(String[] args) {
 	List<Integer> numbers = new ArrayList<>();
 	List<Integer> dividables = new ArrayList<>();
+	final int divider = 3;
 
 	// Initialize list values
 	numbers = initList(numbers);
@@ -21,8 +22,8 @@ public class NumberReportProblem {
 	printReport(numbers);
 
 	// Report for multiple by 3 numbers
-	dividables = findDividables(numbers, 3);
-	System.out.println("\nReport for numbers dividable by 3\n" + dividables);
+	dividables = findDividables(numbers, divider);
+	System.out.println("\nReport for numbers dividable by "+divider+"\n" + dividables);
 	System.out.println("---------------------------------");
 	printReport(dividables);
     }
@@ -43,11 +44,11 @@ public class NumberReportProblem {
 	System.out.println("Standart deviation is: " + calculateDeviation(list, average));
     }
 
-    private static List<Integer> findDividables(List<Integer> list, int divider) {
+    private static List<Integer> findDividables(List<Integer> list, int x) {
 	Set<Integer> dividableByX = new HashSet<>();
 
 	for (int i = 0; i < list.size(); i++) {
-	    if (list.get(i) % divider == 0) {
+	    if (list.get(i) % x == 0) {
 		dividableByX.add(list.get(i));
 	    }
 	}
