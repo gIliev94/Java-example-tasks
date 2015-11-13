@@ -14,7 +14,7 @@ public class NumberReportProblem {
 	final int divider = 3;
 
 	// Initialize list values
-	numbers = initList(numbers);
+	initList(numbers);
 
 	// Report for all numbers
 	System.out.println("\nReport for all numbers\n" + numbers);
@@ -55,8 +55,8 @@ public class NumberReportProblem {
 
 	return new ArrayList<>(dividableByX);
     }
-
-    private static List<Integer> initList(List<Integer> list) {
+    
+    private static void initList(List<Integer> list) {
 	list.add(4);
 	list.add(14);
 	list.add(53);
@@ -67,8 +67,6 @@ public class NumberReportProblem {
 	list.add(2);
 	list.add(11);
 	list.add(33);
-
-	return list;
     }
 
     private static int calculateAverage(List<Integer> list) {
