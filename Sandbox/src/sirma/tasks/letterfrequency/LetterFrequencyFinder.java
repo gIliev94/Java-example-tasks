@@ -17,44 +17,41 @@ public final class LetterFrequencyFinder {
 
     public static void main(String[] args) {
 
-	char[] charArray;
+	char[] characters;
 	Integer frequency;
-	Map<Character, Integer> outputMap;
-	Map<Character, Integer> charMap = new TreeMap<>();
+	Map<Character, Integer> characterMap = new TreeMap<>();
 
 	System.out.println("Input text here:");
 
-	try (Scanner sc = new Scanner(System.in)) {
+	try (Scanner input = new Scanner(System.in)) {
 
-	    charArray = sc.nextLine().toUpperCase().toCharArray();
+	    characters = input.nextLine().toUpperCase().toCharArray();
 
-	    for (Character c : charArray) {
-		frequency = charMap.get(c);
+	    for (Character c : characters) {
+		frequency = characterMap.get(c);
 
 		if (Character.isLetter(c)) {
-		    charMap.put(c, (frequency == null) ? 1 : frequency + 1);
+		    characterMap.put(c, (frequency == null) ? 1 : frequency + 1);
 		}
 	    }
 
-	    outputMap = sortValuesDescending(charMap);
+	    Map<Character, Integer> sortedMap = sortValuesDescending(characterMap);
 
 	    System.out.println("\nMost frequent letters are:");
-	    limitPrinting(outputMap);
+	    limitPrinting(sortedMap);
 
-	} catch (NoSuchElementException nex) {
-	    System.out.println("NO LINE WAS FOUND!\n");
-	    nex.printStackTrace();
-	} catch (IllegalStateException iex) {
-	    System.out.println("THE SCANNER IS CLOSED!\n");
-	    iex.printStackTrace();
+	} catch (NoSuchElementException nse) {
+	    System.err.println("NO LINE WAS FOUND!\n");
+	    nse.printStackTrace();
+	} catch (IllegalStateException ise) {
+	    System.err.println("THE SCANNER IS CLOSED!\n");
+	    ise.printStackTrace();
 	}
     }
 
     private static <K, V extends Comparable<? super V>> Map<Character, Integer> sortValuesDescending(
 	    Map<Character, Integer> map) {
-
 	List<Map.Entry<Character, Integer>> list = new ArrayList<>(map.entrySet());
-	Map<Character, Integer> resultMap = new LinkedHashMap<>();
 
 	Collections.sort(list, new Comparator<Map.Entry<Character, Integer>>() {
 	    @Override
@@ -63,20 +60,23 @@ public final class LetterFrequencyFinder {
 	    }
 	});
 
+	map = new LinkedHashMap<>();
+
 	for (Map.Entry<Character, Integer> entry : list) {
-	    resultMap.put(entry.getKey(), entry.getValue());
+	    map.put(entry.getKey(), entry.getValue());
 	}
-	return resultMap;
+
+	return map;
     }
 
     private static void limitPrinting(Map<Character, Integer> outMap) {
 
 	int printCounter = 0;
-	int highestCharFrequency = 0;
+	int highestCharacterFrequency = 0;
 	int currentFrequency = 0;
 	int currentHashtags = 0;
 
-	highestCharFrequency = outMap.values().iterator().next();
+	highestCharacterFrequency = outMap.values().iterator().next();
 
 	for (Map.Entry<Character, Integer> entry : outMap.entrySet()) {
 
@@ -86,8 +86,8 @@ public final class LetterFrequencyFinder {
 	    System.out.print(entry.getKey() + " " + entry.getValue() + " ");
 
 	    currentFrequency = entry.getValue().intValue();
-	    currentHashtags = (currentFrequency == highestCharFrequency ? MAXIMUM_HASHTAGS
-		    : (currentFrequency * MAXIMUM_HASHTAGS) / highestCharFrequency);
+	    currentHashtags = (currentFrequency == highestCharacterFrequency ? MAXIMUM_HASHTAGS
+		    : (currentFrequency * MAXIMUM_HASHTAGS) / highestCharacterFrequency);
 
 	    for (int i = 1; i <= currentHashtags; i++) {
 		System.out.print("#");
