@@ -58,7 +58,7 @@ public class MainProgram {
 		    break;
 
 		default:
-		    System.err.println("Make a valid choice! ");
+		    System.err.println("Make a valid choice!");
 		    System.out.println("---------------------- ");
 		    break;
 		}
