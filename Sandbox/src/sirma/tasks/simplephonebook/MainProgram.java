@@ -1,7 +1,6 @@
 package sirma.tasks.simplephonebook;
 
 import java.util.InputMismatchException;
-import java.util.List;
 import java.util.Scanner;
 
 public class MainProgram {
@@ -10,30 +9,30 @@ public class MainProgram {
 
 	boolean exit = false;
 	String choice = "";
-	Scanner strScan = new Scanner(System.in);
-	Scanner numScan = new Scanner(System.in);
+	Scanner strScanner = new Scanner(System.in);
+	Scanner numScanner = new Scanner(System.in);
 	SimplePhoneBook phoneBook = new SimplePhoneBook();
 
 	try {
 	    do {
 		System.out.print("Please select action (N, R, L, Q): ");
-		choice = strScan.nextLine().toLowerCase();
+		choice = strScanner.nextLine().toLowerCase();
 
 		switch (choice) {
 
 		case "n":
 		    Contact contact = new Contact();
 
-		    inputName(contact, phoneBook, strScan);
-		    inputPhone(contact, phoneBook, strScan);
-		    inputCity(contact, phoneBook, strScan);
+		    inputName(contact, phoneBook, strScanner);
+		    inputPhone(contact, phoneBook, strScanner);
+		    inputCity(contact, phoneBook, strScanner);
 
 		    addContact(phoneBook, contact);
 		    break;
 
 		case "r":
 		    System.out.print("Record ID: ");
-		    int id = numScan.nextInt();
+		    int id = numScanner.nextInt();
 
 		    deleteContact(phoneBook, id);
 		    break;
@@ -45,16 +44,16 @@ public class MainProgram {
 		case "l:name!":
 		case "l:phone!":
 		case "l:city!":
-		    List<Contact> contacts = phoneBook.contacts;
+		    int allContacts = phoneBook.contacts.size();
 
-		    System.out.format("Records (%d):", contacts.size());
+		    System.out.format("Records (%d):", allContacts);
 		    listContacts(phoneBook, choice.substring(1));
 		    break;
 
 		case "q":
 		    System.out.println("Bye! ");
-		    numScan.close();
-		    strScan.close();
+		    numScanner.close();
+		    strScanner.close();
 		    exit = true;
 		    break;
 
@@ -65,9 +64,9 @@ public class MainProgram {
 		}
 	    } while (!exit);
 	} catch (InputMismatchException ime) {
-	    System.out.println("Bad input: IDs are numbers!!!");
+	    System.err.println("Bad input: IDs are numbers!!!");
 	} catch (Exception e) {
-	    System.out.println("Something went wrong:" + e.getMessage());
+	    System.err.println("Something went wrong:" + e.getMessage());
 	}
     }
 
@@ -102,11 +101,11 @@ public class MainProgram {
 	contact.setCity(city);
     }
 
-    private static void addContact(SimplePhoneBook phBook, Contact contact) {
-	if (!phBook.save(contact)) {
+    private static void addContact(SimplePhoneBook phoneBook, Contact contact) {
+	if (!phoneBook.save(contact)) {
 	    System.out.println();
 	    for (String errMsg : contact.errors) {
-		System.out.println(errMsg);
+		System.err.println(errMsg);
 	    }
 	    System.out.println("---------------------- ");
 	} else {
@@ -119,7 +118,7 @@ public class MainProgram {
 	if (phoneBook.delete(contactId)) {
 	    System.out.println("Record with ID " + contactId + " has been removed! ");
 	} else {
-	    System.out.println("Record not found! ");
+	    System.err.println("Record not found! ");
 	}
 	System.out.println("---------------------- ");
     }
