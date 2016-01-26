@@ -6,9 +6,8 @@ import java.util.Scanner;
 
 public class MainProgram {
 
-    public static void main(String[] args) 
-    {
-	
+    public static void main(String[] args) {
+
 	boolean exit = false;
 	String choice = "";
 	Scanner strScan = new Scanner(System.in);
@@ -46,7 +45,7 @@ public class MainProgram {
 		case "l:name!":
 		case "l:phone!":
 		case "l:city!":
-		    List<Contact> contacts = phoneBook.getContacts();
+		    List<Contact> contacts = phoneBook.contacts;
 
 		    System.out.format("Records (%d):", contacts.size());
 		    listContacts(phoneBook, choice.substring(1));
@@ -72,64 +71,64 @@ public class MainProgram {
 	}
     }
 
-    private static void inputName(Contact c, SimplePhoneBook pBook, Scanner strSc) {
+    private static void inputName(Contact contact, SimplePhoneBook phoneBook, Scanner strScan) {
 	String name = "";
 
 	do {
 	    System.out.print("Name: ");
-	    name = strSc.nextLine();
+	    name = strScan.nextLine();
 
-	} while (pBook.notUniqueName(name));
+	} while (PhoneBookValidator.isNotUniqueName(name, phoneBook));
 
-	c.setName(name);
+	contact.setName(name);
     }
 
-    private static void inputPhone(Contact c, SimplePhoneBook pBook, Scanner strSc) {
+    private static void inputPhone(Contact contact, SimplePhoneBook phoneBook, Scanner strScan) {
 	String phone = "";
 
 	do {
 	    System.out.print("Phone number: ");
-	    phone = strSc.nextLine();
+	    phone = strScan.nextLine();
 
-	} while (pBook.notUniquePhone(phone));
-	c.setPhone(phone);
+	} while (PhoneBookValidator.isNotUniquePhone(phone, phoneBook));
+	contact.setPhone(phone);
     }
 
-    private static void inputCity(Contact c, SimplePhoneBook pBook, Scanner strSc) {
+    private static void inputCity(Contact contact, SimplePhoneBook phoneBook, Scanner strScan) {
 	String city = "";
 
 	System.out.print("City: ");
-	city = strSc.nextLine();
-	c.setCity(city);
+	city = strScan.nextLine();
+	contact.setCity(city);
     }
 
-    private static void addContact(SimplePhoneBook phBook, Contact con) {
-	if (!phBook.save(con)) {
-	    System.out.println();   
-	    for (String errMsg : con.getErrors()) {
+    private static void addContact(SimplePhoneBook phBook, Contact contact) {
+	if (!phBook.save(contact)) {
+	    System.out.println();
+	    for (String errMsg : contact.errors) {
 		System.out.println(errMsg);
 	    }
 	    System.out.println("---------------------- ");
 	} else {
-	    System.out.println("New record with ID " + con.getId() + " has been created! ");
+	    System.out.println("New record with ID " + contact.getId() + " has been created! ");
 	    System.out.println("---------------------- ");
 	}
     }
 
-    private static void deleteContact(SimplePhoneBook phBook, int id) {
-	if (phBook.delete(id)) {
-	    System.out.println("Record with ID " + id + " has been removed! ");
+    private static void deleteContact(SimplePhoneBook phoneBook, int contactId) {
+	if (phoneBook.delete(contactId)) {
+	    System.out.println("Record with ID " + contactId + " has been removed! ");
 	} else {
 	    System.out.println("Record not found! ");
 	}
 	System.out.println("---------------------- ");
     }
 
-    private static void listContacts(SimplePhoneBook phBook, String inputColumn) {
-	if (inputColumn.startsWith(":")) {
-	    phBook.listByCriteria(inputColumn.substring(1));
+    private static void listContacts(SimplePhoneBook phoneBook, String filterColumn) {
+	if (filterColumn.startsWith(":")) {
+	    phoneBook.list(filterColumn.substring(1));
 	} else {
-	    phBook.list();
+	    phoneBook.list(null);
 	}
 	System.out.println("---------------------- ");
     }

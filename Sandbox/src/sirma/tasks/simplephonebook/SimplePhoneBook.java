@@ -6,73 +6,97 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.ListIterator;
 
-public class SimplePhoneBook {
+/**
+ * Implementation class of a simple phone book object.
+ * 
+ * @author Georgi Iliev
+ *
+ */
+public class SimplePhoneBook implements IPhoneBook {
 
-    private int id = 1;
-    private List<Contact> contacts = new ArrayList<>();
+    private int id;
+    
+    /**
+     * Collection of the contacts present in the phone book.
+     * 
+     */
+    List<Contact> contacts;
 
-    public List<Contact> getContacts() {
-	return contacts;
+    protected SimplePhoneBook() {
+	id = 1;
+	contacts = new ArrayList<>();
     }
 
-    private int generateId() {
-	return id++;
-    }
-
-    boolean save(Contact contact) {
-	if (!contact.validate()) {
+    public boolean save(Contact contact) {
+	if (!ContactValidator.validate(contact)) {
 	    return false;
 	}
+
 	contact.setId(generateId());
 	this.contacts.add(contact);
 	return true;
     }
 
-    boolean delete(int id) {
-	for (Contact c : this.contacts) {
-	    if (c.getId() == id)
-		return this.contacts.remove(c);
+    public boolean delete(int id) {
+	for (Contact con : this.contacts) {
+	    if (con.getId() == id)
+		return this.contacts.remove(con);
 	}
 	return false;
     }
 
-    void list() {
-	ListIterator<Contact> li = this.contacts.listIterator(this.contacts.size());
+    public void list(String column) {
+	if (column == null) {
+	    ListIterator<Contact> listIterator = this.contacts.listIterator(this.contacts.size());
 
-	while (li.hasPrevious()) {
-	    formatContactInfo(li.previous());
+	    while (listIterator.hasPrevious()) {
+		printFormatedContactInformation(listIterator.previous());
+	    }
+	    System.out.println();
+	} else {
+	    sortByCriteria(column);
+	    printContactsInformation();
+	}
+
+    }
+
+    /**
+     * Prints out all the information for a {@link Contact}.
+     * 
+     */
+    private void printContactsInformation() {
+	for (Contact con : this.contacts) {
+	    printFormatedContactInformation(con);
 	}
 	System.out.println();
     }
 
-    void listByCriteria(String column) {
-	sortByCriteria(column);
-	printContactsInfo();
-    }
-
-    private void printContactsInfo() {
-	for (Contact c : this.contacts) {
-	    formatContactInfo(c);
-	}
-	System.out.println();
-    }
-
-    private void formatContactInfo(Contact c) {
+    /**
+     * Shapes up the listing of information for a contact to a specific format.
+     * 
+     * @param contact - the contact to be printed.
+     */
+    private void printFormatedContactInformation(Contact contact) {
 	String printCity = "";
 
-	if (!c.getCity().equals("")) {
-	    printCity = "(" + c.getCity() + ")";
+	if (!contact.getCity().equals("")) {
+	    printCity = "(" + contact.getCity() + ")";
 	}
-	System.out.format("\n[%d] %s %s %s", c.getId(), c.getPhone(), c.getName(), printCity);
+	System.out.format("\n[%d] %s %s %s", contact.getId(), contact.getPhone(), contact.getName(), printCity);
     }
 
-    private void sortByCriteria(String col) {
+    /**
+     * Sorts the contacts in the phone book according to the provided filter column as criteria.
+     * 
+     * @param column - the criteria(filter) to be applied.
+     */
+    private void sortByCriteria(String column) {
 	Collections.sort(this.contacts, new Comparator<Contact>() {
 	    @Override
 	    public int compare(Contact c1, Contact c2) {
 		int result;
 
-		switch (col) {
+		switch (column) {
 
 		case "name":
 		    result = (c1.getName()).compareToIgnoreCase(c2.getName());
@@ -116,23 +140,7 @@ public class SimplePhoneBook {
 	});
     }
 
-    boolean notUniqueName(String name) {
-	for (Contact c : this.contacts) {
-	    if (c.getName().equalsIgnoreCase(name) || c.getName().equalsIgnoreCase(name.trim())) {
-		System.out.println("Error: A record with such name already exists!");
-		return true;
-	    }
-	}
-	return false;
-    }
-
-    boolean notUniquePhone(String phone) {
-	for (Contact c : this.contacts) {
-	    if (c.getPhone().equalsIgnoreCase(phone) || c.getPhone().equalsIgnoreCase(phone.trim())) {
-		System.out.println("Error: A record with such phone number already exists!");
-		return true;
-	    }
-	}
-	return false;
+    private int generateId() {
+	return id++;
     }
 }
