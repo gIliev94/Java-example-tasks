@@ -12,7 +12,7 @@ public class PeaksArrayProblem {
 
     public static void printPeaksOnly(int[] array) {
 	int notPeak = 0;
-	
+
 	for (int i = 0; i < array.length; i++) {
 	    notPeak = 0;
 	    for (int j = i + 1; j < array.length; j++) {

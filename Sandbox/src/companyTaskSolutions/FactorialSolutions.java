@@ -7,7 +7,7 @@ public class FactorialSolutions {
     public static void main(String args[]) {
 	System.out.println("Input number here!");
 	Scanner sc = new Scanner(System.in);
-	
+
 	int num = sc.nextInt();
 	int fact = 0;
 

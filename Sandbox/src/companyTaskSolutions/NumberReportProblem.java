@@ -11,7 +11,7 @@ public class NumberReportProblem {
     public static void main(String[] args) {
 	List<Integer> numbers = new ArrayList<>();
 	List<Integer> dividables = new ArrayList<>();
-	
+
 	final int divider = 3;
 
 	// Initialize list values
@@ -24,7 +24,7 @@ public class NumberReportProblem {
 
 	// Report for multiple by 3 numbers
 	dividables = findDividables(numbers, divider);
-	System.out.println("\nReport for numbers dividable by "+divider+"\n" + dividables);
+	System.out.println("\nReport for numbers dividable by " + divider + "\n" + dividables);
 	System.out.println("---------------------------------");
 	printReport(dividables);
     }
@@ -56,7 +56,7 @@ public class NumberReportProblem {
 
 	return new ArrayList<>(dividableByX);
     }
-    
+
     private static void initList(List<Integer> list) {
 	list.add(4);
 	list.add(14);

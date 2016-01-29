@@ -9,7 +9,7 @@ public class ArrayValueFrequency {
 
 	int[] array = { 3, 4, 5, 6, 7, 10 };
 
-	if (hasNoDuplicates(array)){
+	if (hasNoDuplicates(array)) {
 	    System.out.print("0");
 	}
     }

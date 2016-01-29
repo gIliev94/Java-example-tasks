@@ -10,7 +10,7 @@ public class DivisionProblem {
 
 	try (Scanner sc = new Scanner(System.in)) {
 	    int number = sc.nextInt();
-	    
+
 	    fizzbuzz(number);
 	}
 
