@@ -9,6 +9,13 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
 
+/**
+ * Implementation that determines the frequencies of reocurring characters in a
+ * text input and prints out graphical representation of the tendecy.
+ * 
+ * @author Georgi Iliev
+ *
+ */
 public final class LetterFrequencyFinder {
 
     public static final int PRINT_LIMIT = 20;
