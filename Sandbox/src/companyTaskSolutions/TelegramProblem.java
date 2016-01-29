@@ -7,20 +7,19 @@ public class TelegramProblem {
      */
     public static void main(String[] args) {
 	// FOR MULTIPLE LINES
-	String[] veryLines = { "I am noob public speaker and persecutor", "There is really no explanation at all",
+	String[] manyLines = { "I am noob public speaker and persecutor", "There is really no explanation at all",
 		"What is done cannot be undone" };
-	printLimited(veryLines, 30);
-	// */
+	doLimitedPrinting(manyLines, 30);
     }
 
-    public static void printLimited(String[] lines, int limit) {
+    public static void doLimitedPrinting(String[] lines, int limit) {
 	for (String line : lines) {
-	    String[] res = line.split(" ");
+	    String[] result = line.split(" ");
 	    String finalOutput = "";
 
 	    System.out.println("\n\nInput:\n" + line);
 
-	    for (String test : res) {
+	    for (String test : result) {
 		if ((finalOutput + test).length() >= 30) {
 		    System.out.println("\nAdding " + "\"" + test + "\"" + " will make it over the limit( " + limit
 			    + " )... Stopping here!");
