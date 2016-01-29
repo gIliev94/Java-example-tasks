@@ -11,6 +11,7 @@ public class NumberReportProblem {
     public static void main(String[] args) {
 	List<Integer> numbers = new ArrayList<>();
 	List<Integer> dividables = new ArrayList<>();
+	
 	final int divider = 3;
 
 	// Initialize list values

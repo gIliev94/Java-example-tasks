@@ -10,7 +10,6 @@ public class ReverseArrayProblem {
 
 	char[] finalArr = reverseArr(arr);
 	System.out.print(Arrays.toString(finalArr));
-
     }
 
     public static char[] reverseArr(char[] array) {
