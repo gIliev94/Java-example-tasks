@@ -1,5 +1,14 @@
 package companyTaskSolutions;
 
+/**
+ * Problem descriotion:
+ * <p>
+ * Just a demo of the infamous deadlock state.
+ * </p>
+ * 
+ * @author Georgi Iliev
+ *
+ */
 public class DeadLockDemonstration {
     public static void main(String[] args) {
 

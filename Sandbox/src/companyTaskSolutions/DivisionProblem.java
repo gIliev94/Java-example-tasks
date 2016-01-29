@@ -2,6 +2,16 @@ package companyTaskSolutions;
 
 import java.util.Scanner;
 
+/**
+ * Problem Description:
+ * <p>
+ * Determine whether a number can be divided in 3,5 or in both -> print a
+ * message accordingly.
+ * </p>
+ * 
+ * @author Georgi Iliev
+ *
+ */
 public class DivisionProblem {
 
     public static void main(String[] args) {

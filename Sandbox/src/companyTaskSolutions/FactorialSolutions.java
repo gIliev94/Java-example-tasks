@@ -2,6 +2,15 @@ package companyTaskSolutions;
 
 import java.util.Scanner;
 
+/**
+ * Problem descriotion:
+ * <p>
+ * Just a demo of the three possible factorial implementations.
+ * </p>
+ * 
+ * @author Georgi Iliev
+ *
+ */
 public class FactorialSolutions {
 
     public static void main(String args[]) {
