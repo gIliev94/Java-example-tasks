@@ -24,10 +24,10 @@ import java.util.Set;
  */
 public class NumberReportProblem {
 
-    public static final int MAX_ADD = 20;
-    public static final int MIN_ADD = 10;
-    public static final int MAX_NUM = 1000;
-    public static final int MIN_NUM = 1;
+    private static final int MAX_ADD = 20;
+    private static final int MIN_ADD = 10;
+    private static final int MAX_NUM = 1000;
+    private static final int MIN_NUM = 1;
 
     public static void main(String[] args) {
 	List<Integer> numbers = new ArrayList<>();

@@ -29,7 +29,7 @@ public class FactorialSolutions {
 	sc.close();
     }
 
-    public static int factorialIterative(int number) {
+    private static int factorialIterative(int number) {
 	int i, fact = 1;
 
 	for (i = 1; i <= number; i++)
@@ -38,7 +38,7 @@ public class FactorialSolutions {
 	return fact;
     }
 
-    public static int factorialRecursive(int number) {
+    private static int factorialRecursive(int number) {
 
 	if (number == 0)
 	    return 1;

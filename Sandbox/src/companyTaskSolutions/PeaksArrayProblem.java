@@ -14,8 +14,8 @@ import java.util.Random;
  */
 public class PeaksArrayProblem {
 
-    public static final int MAX = 20;
-    public static final int MIN = 0;
+    private static final int MAX = 20;
+    private static final int MIN = 0;
 
     public static void main(String[] args) {
 
@@ -41,7 +41,7 @@ public class PeaksArrayProblem {
 	return arr;
     }
 
-    public static void printPeaksOnly(int[] array) {
+    private static void printPeaksOnly(int[] array) {
 	int notPeak = 0;
 
 	for (int i = 0; i < array.length; i++) {

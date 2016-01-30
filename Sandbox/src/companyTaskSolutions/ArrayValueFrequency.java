@@ -16,8 +16,8 @@ import java.util.Set;
  */
 public class ArrayValueFrequency {
 
-    public static final int MAX = 50;
-    public static final int MIN = 0;
+    private static final int MAX = 50;
+    private static final int MIN = 0;
 
     public static void main(String[] args) {
 

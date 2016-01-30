@@ -26,7 +26,7 @@ public class DivisionProblem {
 
     }
 
-    public static void fizzbuzz(int n) {
+    private static void fizzbuzz(int n) {
 	if ((n % 3 == 0) && (n % 5 == 0))
 	    System.out.print("FIZZBUZZ");
 	else if (n % 3 == 0)

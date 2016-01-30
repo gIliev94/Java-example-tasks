@@ -42,7 +42,7 @@ public class TelegramProblem {
 	input.close();
     }
 
-    public static void doLimitedPrinting(Vector<String> lines, int limit) {
+    private static void doLimitedPrinting(Vector<String> lines, int limit) {
 	for (String line : lines) {
 	    String[] totalWords = line.split(" ");
 	    String telegram = "N/A";
