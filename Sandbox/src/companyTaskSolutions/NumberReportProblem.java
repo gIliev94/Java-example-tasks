@@ -4,9 +4,30 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
+/**
+ * Problem description:
+ * <p>
+ * For a collection of integers print out a report containing the following:
+ * - Total count
+ * - Average value
+ * - Minimum value
+ * - Maximum value
+ * - Standart deviation
+ *
+ * </p>
+ * 
+ * @author Georgi Iliev
+ *
+ */
 public class NumberReportProblem {
+
+    public static final int MAX_ADD = 20;
+    public static final int MIN_ADD = 10;
+    public static final int MAX_NUM = 1000;
+    public static final int MIN_NUM = 1;
 
     public static void main(String[] args) {
 	List<Integer> numbers = new ArrayList<>();
@@ -14,15 +35,12 @@ public class NumberReportProblem {
 
 	final int divider = 3;
 
-	// Initialize list values
 	initList(numbers);
 
-	// Report for all numbers
 	System.out.println("\nReport for all numbers\n" + numbers);
 	System.out.println("---------------------------------");
 	printReport(numbers);
 
-	// Report for multiple by 3 numbers
 	dividables = findDividables(numbers, divider);
 	System.out.println("\nReport for numbers dividable by " + divider + "\n" + dividables);
 	System.out.println("---------------------------------");
@@ -58,16 +76,15 @@ public class NumberReportProblem {
     }
 
     private static void initList(List<Integer> list) {
-	list.add(4);
-	list.add(14);
-	list.add(53);
-	list.add(63);
-	list.add(7547);
-	list.add(543);
-	list.add(3);
-	list.add(2);
-	list.add(11);
-	list.add(33);
+	Random random = new Random();
+
+	int randomAdditions = random.nextInt((MAX_ADD - MIN_ADD) + 1) + MIN_ADD;
+	int randomNumber = 0;
+
+	for (int i = 0; i < randomAdditions; i++) {
+	    randomNumber = random.nextInt((MAX_NUM - MIN_NUM) + 1) + MIN_NUM;
+	    list.add(randomNumber);
+	}
     }
 
     private static int calculateAverage(List<Integer> list) {
