@@ -3,9 +3,9 @@ package companyTaskSolutions;
 import java.util.Scanner;
 
 /**
- * Problem descriotion:
+ * Problem description:
  * <p>
- * Just a demo of the three possible factorial implementations.
+ * Just a demo of possible factorial implementations.
  * </p>
  * 
  * @author Georgi Iliev
