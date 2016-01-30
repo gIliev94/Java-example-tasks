@@ -20,9 +20,15 @@ public class TelegramProblem {
     public static void main(String[] args) {
 	Vector<String> lines = new Vector<>();
 
+	addLines(lines);
+
+	doLimitedPrinting(lines, LENGTH_LIMIT);
+    }
+
+    private static void addLines(Vector<String> lines) {
 	Scanner input = new Scanner(System.in);
 	String currentLine;
-
+	
 	do {
 	    System.out.print("Input line( input 'S' for stop ) : ");
 	    currentLine = input.nextLine();
@@ -34,27 +40,25 @@ public class TelegramProblem {
 	} while (!currentLine.equalsIgnoreCase("S"));
 
 	input.close();
-
-	doLimitedPrinting(lines, LENGTH_LIMIT);
     }
 
     public static void doLimitedPrinting(Vector<String> lines, int limit) {
 	for (String line : lines) {
 	    String[] totalWords = line.split(" ");
-	    String telegram = "";
+	    String telegram = "N/A";
 
-	    System.out.println("\n\nInput:\n" + line);
+	    System.out.println("\n\nInput: " + line);
 
 	    for (String word : totalWords) {
-		if ((telegram + word).length() >= 30) {
+		if ((telegram + word).length() >= limit) {
 		    System.out.println("\nAdding " + "\"" + word + "\"" + " will make it over the limit( " + limit
 			    + " )... Stopping here!");
 		    break;
 		}
 		telegram += " " + word;
 	    }
-	    System.out.print("\nFinal output:\n" + telegram);
-	    System.out.print("\nLength: " + telegram.length());
+	    System.out.print("\nTelegram: " + telegram);
+	    System.out.print("\nTelegram length: " + telegram.length());
 	    System.out.print(
 		    "\n-----------------------------------------------------------------------------------------------");
 	}
