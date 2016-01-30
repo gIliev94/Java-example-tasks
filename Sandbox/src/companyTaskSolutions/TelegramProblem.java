@@ -1,34 +1,60 @@
 package companyTaskSolutions;
 
+import java.util.Scanner;
+import java.util.Vector;
+
+/**
+ * Problem description:
+ * <p>
+ * Print out as many words as possible without going over a defined limit of
+ * total string length.
+ * </p>
+ * 
+ * @author Georgi Iliev
+ *
+ */
 public class TelegramProblem {
-    /***
-     * THE IDEA IS TO PRINT AS MANY WORDS AS POSSIBLE WITHOUT GOING OVER A LIMIT
-     * FOR LENGTH OF TOTAL STRING
-     */
+
+    private static final int LENGTH_LIMIT = 30;
+
     public static void main(String[] args) {
-	// FOR MULTIPLE LINES
-	String[] manyLines = { "I am noob public speaker and persecutor", "There is really no explanation at all",
-		"What is done cannot be undone" };
-	doLimitedPrinting(manyLines, 30);
+	Vector<String> lines = new Vector<>();
+
+	Scanner input = new Scanner(System.in);
+	String currentLine;
+
+	do {
+	    System.out.print("Input line( input 'S' for stop ) : ");
+	    currentLine = input.nextLine();
+
+	    if (!currentLine.equalsIgnoreCase("S")) {
+		lines.addElement(currentLine);
+	    }
+
+	} while (!currentLine.equalsIgnoreCase("S"));
+
+	input.close();
+
+	doLimitedPrinting(lines, LENGTH_LIMIT);
     }
 
-    public static void doLimitedPrinting(String[] lines, int limit) {
+    public static void doLimitedPrinting(Vector<String> lines, int limit) {
 	for (String line : lines) {
-	    String[] result = line.split(" ");
-	    String finalOutput = "";
+	    String[] totalWords = line.split(" ");
+	    String telegram = "";
 
 	    System.out.println("\n\nInput:\n" + line);
 
-	    for (String test : result) {
-		if ((finalOutput + test).length() >= 30) {
-		    System.out.println("\nAdding " + "\"" + test + "\"" + " will make it over the limit( " + limit
+	    for (String word : totalWords) {
+		if ((telegram + word).length() >= 30) {
+		    System.out.println("\nAdding " + "\"" + word + "\"" + " will make it over the limit( " + limit
 			    + " )... Stopping here!");
 		    break;
 		}
-		finalOutput += " " + test;
+		telegram += " " + word;
 	    }
-	    System.out.print("\nFinal output:\n" + finalOutput);
-	    System.out.print("\nLength: " + finalOutput.length());
+	    System.out.print("\nFinal output:\n" + telegram);
+	    System.out.print("\nLength: " + telegram.length());
 	    System.out.print(
 		    "\n-----------------------------------------------------------------------------------------------");
 	}
