@@ -19,7 +19,7 @@ import java.util.TreeMap;
 public final class LetterFrequencyFinder {
 
     public static final int PRINT_LIMIT = 20;
-    public static final int MAXIMUM_ALLOWED_HASHTAGS_ = 20;
+    public static final int MAXIMUM_ALLOWED_HASHTAGS = 20;
 
     public static void main(String[] args) {
 
@@ -96,8 +96,8 @@ public final class LetterFrequencyFinder {
 	    System.out.print(entry.getKey() + " " + entry.getValue() + " ");
 
 	    currentFrequency = entry.getValue().intValue();
-	    currentHashtags = (currentFrequency == highestFrequency ? MAXIMUM_ALLOWED_HASHTAGS_
-		    : (currentFrequency * MAXIMUM_ALLOWED_HASHTAGS_) / highestFrequency);
+	    currentHashtags = (currentFrequency == highestFrequency ? MAXIMUM_ALLOWED_HASHTAGS
+		    : (currentFrequency * MAXIMUM_ALLOWED_HASHTAGS) / highestFrequency);
 
 	    for (int i = 1; i <= currentHashtags; i++) {
 		System.out.print("#");
