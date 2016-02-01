@@ -8,6 +8,9 @@ package sirma.tasks.simplephonebook;
  */
 public class PhoneBookValidator {
 
+    private PhoneBookValidator() {
+    }
+
     /**
      * Checks whether the contact attempting to be saved overlaps with an
      * existing one by {@code name}.

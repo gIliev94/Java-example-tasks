@@ -8,6 +8,9 @@ package sirma.tasks.simplephonebook;
  */
 public class ContactValidator {
 
+    private ContactValidator() {
+    }
+
     /**
      * Encloses all the necessary validations a contact must pass in order to be
      * saved. If even one validation fails the contact is rejected.
