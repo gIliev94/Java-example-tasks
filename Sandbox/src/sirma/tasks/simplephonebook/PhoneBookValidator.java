@@ -22,7 +22,7 @@ public class PhoneBookValidator {
      * @return TRUE if there is overlapping, FALSE if the contact`s name is
      *         unique.
      */
-    protected static boolean isNotUniqueName(String name, SimplePhoneBook book) {
+    protected static boolean isNotUniqueName(String name, PhoneBook book) {
 	for (Contact c : book.contacts) {
 	    if (c.getName().equalsIgnoreCase(name) || c.getName().equalsIgnoreCase(name.trim())) {
 		System.out.println("Error: A record with such name already exists!");
@@ -43,7 +43,7 @@ public class PhoneBookValidator {
      * @return TRUE if there is overlapping, FALSE if the contact`s name is
      *         unique.
      */
-    protected static boolean isNotUniquePhone(String phone, SimplePhoneBook book) {
+    protected static boolean isNotUniquePhone(String phone, PhoneBook book) {
 	for (Contact c : book.contacts) {
 	    if (c.getPhone().equalsIgnoreCase(phone) || c.getPhone().equalsIgnoreCase(phone.trim())) {
 		System.out.println("Error: A record with such phone number already exists!");

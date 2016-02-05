@@ -1,7 +1,7 @@
 package sirma.tasks.simplephonebook;
 
 /**
- * Interface describing core behavior of a {@link SimplePhoneBook}.
+ * Interface describing core behavior of a {@link PhoneBook}.
  * 
  * @author Georgi Iliev
  *

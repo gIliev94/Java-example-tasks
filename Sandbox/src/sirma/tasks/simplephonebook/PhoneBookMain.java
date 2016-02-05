@@ -3,7 +3,13 @@ package sirma.tasks.simplephonebook;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class MainProgram {
+/**
+ * Main class of the application - demonstrates the use cases of the phone book.
+ * 
+ * @author Georgi Iliev
+ *
+ */
+public class PhoneBookMain {
 
     public static void main(String[] args) {
 
@@ -11,7 +17,7 @@ public class MainProgram {
 	String choice = "";
 	Scanner strScanner = new Scanner(System.in);
 	Scanner numScanner = new Scanner(System.in);
-	SimplePhoneBook phoneBook = new SimplePhoneBook();
+	PhoneBook phoneBook = new PhoneBook();
 
 	try {
 	    do {
@@ -70,7 +76,7 @@ public class MainProgram {
 	}
     }
 
-    private static void inputName(Contact contact, SimplePhoneBook phoneBook, Scanner strScan) {
+    private static void inputName(Contact contact, PhoneBook phoneBook, Scanner strScan) {
 	String name = "";
 
 	do {
@@ -82,7 +88,7 @@ public class MainProgram {
 	contact.setName(name);
     }
 
-    private static void inputPhone(Contact contact, SimplePhoneBook phoneBook, Scanner strScan) {
+    private static void inputPhone(Contact contact, PhoneBook phoneBook, Scanner strScan) {
 	String phone = "";
 
 	do {
@@ -93,7 +99,7 @@ public class MainProgram {
 	contact.setPhone(phone);
     }
 
-    private static void inputCity(Contact contact, SimplePhoneBook phoneBook, Scanner strScan) {
+    private static void inputCity(Contact contact, PhoneBook phoneBook, Scanner strScan) {
 	String city = "";
 
 	System.out.print("City: ");
@@ -101,7 +107,7 @@ public class MainProgram {
 	contact.setCity(city);
     }
 
-    private static void addContact(SimplePhoneBook phoneBook, Contact contact) {
+    private static void addContact(PhoneBook phoneBook, Contact contact) {
 	if (!phoneBook.save(contact)) {
 	    System.out.println();
 	    for (String errMsg : contact.errors) {
@@ -114,7 +120,7 @@ public class MainProgram {
 	}
     }
 
-    private static void deleteContact(SimplePhoneBook phoneBook, int contactId) {
+    private static void deleteContact(PhoneBook phoneBook, int contactId) {
 	if (phoneBook.delete(contactId)) {
 	    System.out.println("Record with ID " + contactId + " has been removed! ");
 	} else {
@@ -123,7 +129,7 @@ public class MainProgram {
 	System.out.println("---------------------- ");
     }
 
-    private static void listContacts(SimplePhoneBook phoneBook, String filterColumn) {
+    private static void listContacts(PhoneBook phoneBook, String filterColumn) {
 	if (filterColumn.startsWith(":")) {
 	    phoneBook.list(filterColumn.substring(1));
 	} else {

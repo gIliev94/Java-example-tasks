@@ -2,7 +2,6 @@ package sirma.tasks.simplephonebook;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -12,7 +11,7 @@ import java.util.ListIterator;
  * @author Georgi Iliev
  *
  */
-public class SimplePhoneBook implements IPhoneBook {
+public class PhoneBook implements IPhoneBook {
 
     private int id;
     
@@ -22,7 +21,7 @@ public class SimplePhoneBook implements IPhoneBook {
      */
     List<Contact> contacts;
 
-    protected SimplePhoneBook() {
+    protected PhoneBook() {
 	id = 1;
 	contacts = new ArrayList<>();
     }
@@ -88,56 +87,10 @@ public class SimplePhoneBook implements IPhoneBook {
     /**
      * Sorts the contacts in the phone book according to the provided filter column as criteria.
      * 
-     * @param column - the criteria(filter) to be applied.
+     * @param criteria - the criteria(filter) to be applied.
      */
-    private void sortByCriteria(String column) {
-	Collections.sort(this.contacts, new Comparator<Contact>() {
-	    @Override
-	    public int compare(Contact c1, Contact c2) {
-		int result;
-
-		switch (column) {
-
-		case "name":
-		    result = (c1.getName()).compareToIgnoreCase(c2.getName());
-		    break;
-
-		case "phone":
-		    result = (c1.getPhone()).compareToIgnoreCase(c2.getPhone());
-		    break;
-
-		case "city":
-		    result = (c1.getCity()).compareToIgnoreCase(c2.getCity());
-
-		    if (c1.getCity().equals("")) {
-			result = 1;
-		    }
-
-		    if (c2.getCity().equals("")) {
-			result = -1;
-		    }
-
-		    break;
-
-		case "name!":
-		    result = (c2.getName()).compareToIgnoreCase(c1.getName());
-		    break;
-
-		case "phone!":
-		    result = (c2.getPhone()).compareToIgnoreCase(c1.getPhone());
-		    break;
-
-		case "city!":
-		    result = (c2.getCity()).compareToIgnoreCase(c1.getCity());
-		    break;
-
-		default:
-		    result = 0;
-		    break;
-		}
-		return result;
-	    }
-	});
+    private void sortByCriteria(String criteria) {
+    	Collections.sort(this.contacts, new CriteriaComparator(criteria));
     }
 
     private int generateId() {
