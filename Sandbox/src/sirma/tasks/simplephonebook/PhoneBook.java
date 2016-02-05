@@ -14,7 +14,7 @@ import java.util.ListIterator;
 public class PhoneBook implements IPhoneBook {
 
     private int id;
-    
+
     /**
      * Collection of the contacts present in the phone book.
      * 
@@ -26,6 +26,7 @@ public class PhoneBook implements IPhoneBook {
 	contacts = new ArrayList<>();
     }
 
+    @Override
     public boolean save(Contact contact) {
 	if (!ContactValidator.validate(contact)) {
 	    return false;
@@ -36,6 +37,7 @@ public class PhoneBook implements IPhoneBook {
 	return true;
     }
 
+    @Override
     public boolean delete(int id) {
 	for (Contact con : this.contacts) {
 	    if (con.getId() == id)
@@ -44,6 +46,7 @@ public class PhoneBook implements IPhoneBook {
 	return false;
     }
 
+    @Override
     public void list(String column) {
 	if (column == null) {
 	    ListIterator<Contact> listIterator = this.contacts.listIterator(this.contacts.size());
@@ -73,7 +76,8 @@ public class PhoneBook implements IPhoneBook {
     /**
      * Shapes up the listing of information for a contact to a specific format.
      * 
-     * @param contact - the contact to be printed.
+     * @param contact
+     *            - the contact to be printed.
      */
     private void printFormatedContactInformation(Contact contact) {
 	String printCity = "";
@@ -85,12 +89,14 @@ public class PhoneBook implements IPhoneBook {
     }
 
     /**
-     * Sorts the contacts in the phone book according to the provided filter column as criteria.
+     * Sorts the contacts in the phone book according to the provided filter
+     * column as criteria.
      * 
-     * @param criteria - the criteria(filter) to be applied.
+     * @param criteria
+     *            - the criteria(filter) to be applied.
      */
     private void sortByCriteria(String criteria) {
-    	Collections.sort(this.contacts, new CriteriaComparator(criteria));
+	Collections.sort(this.contacts, new CriteriaComparator(criteria));
     }
 
     private int generateId() {
