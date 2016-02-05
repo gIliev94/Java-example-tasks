@@ -2,7 +2,6 @@ package sirma.tasks.letterfrequency;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,8 +9,8 @@ import java.util.Scanner;
 import java.util.TreeMap;
 
 /**
- * Implementation that determines the frequencies of reocurring characters in a
- * text input and prints out graphical representation of the tendecy.
+ * Implementation that determines the frequencies of recurring characters in a
+ * text input and prints out graphical representation of the tendency.
  * 
  * @author Georgi Iliev
  *
@@ -23,7 +22,7 @@ public final class LetterFrequencyFinder {
 
     public static void main(String[] args) {
 
-	Map<Character, Integer> characterMap = new TreeMap<>();
+	Map<Character, Integer> charactersMap = new TreeMap<>();
 
 	System.out.println("Input text here:");
 	Scanner input = new Scanner(System.in);
@@ -32,28 +31,28 @@ public final class LetterFrequencyFinder {
 
 	    String text = input.nextLine().toUpperCase();
 
-	    determineFrequencies(characterMap, text);
+	    determineFrequencies(charactersMap, text);
 
-	    Map<Character, Integer> sortedMap = getSortedByValuesDescending(characterMap);
+	    Map<Character, Integer> sortedDescMap = getSortedByValuesDescending(charactersMap);
 
 	    System.out.println("\nMost frequent letters are:");
-	    doLimitedPrinting(sortedMap);
+	    doLimitedPrinting(sortedDescMap);
 
 	} finally {
 	    input.close();
 	}
     }
 
-    private static void determineFrequencies(Map<Character, Integer> characterMap, String text) {
+    private static void determineFrequencies(Map<Character, Integer> charactersMap, String text) {
 	char[] characters;
 	Integer frequency;
 	characters = text.toCharArray();
 
 	for (Character c : characters) {
-	    frequency = characterMap.get(c);
+	    frequency = charactersMap.get(c);
 
 	    if (Character.isLetter(c)) {
-		characterMap.put(c, (frequency == null) ? 1 : frequency + 1);
+		charactersMap.put(c, (frequency == null) ? 1 : frequency + 1);
 	    }
 	}
     }
@@ -63,12 +62,7 @@ public final class LetterFrequencyFinder {
 
 	List<Map.Entry<Character, Integer>> list = new ArrayList<>(map.entrySet());
 
-	Collections.sort(list, new Comparator<Map.Entry<Character, Integer>>() {
-	    @Override
-	    public int compare(Map.Entry<Character, Integer> obj1, Map.Entry<Character, Integer> obj2) {
-		return (obj2.getValue()).compareTo(obj1.getValue());
-	    }
-	});
+	Collections.sort(list, new FrequencyDescComparator());
 
 	map = new LinkedHashMap<>(map.size());
 
