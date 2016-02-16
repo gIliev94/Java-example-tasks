@@ -14,7 +14,7 @@ public class PhoneBookMain {
     public static void main(String[] args) {
 
 	boolean exit = false;
-	String choice = "";
+	String choice = StringConstants.EMPTY;
 	Scanner strScanner = new Scanner(System.in);
 	Scanner numScanner = new Scanner(System.in);
 	PhoneBook phoneBook = new PhoneBook();
@@ -72,12 +72,12 @@ public class PhoneBookMain {
 	} catch (InputMismatchException ime) {
 	    System.err.println("Bad input: IDs are numbers!!!");
 	} catch (Exception e) {
-	    System.err.println("Something went wrong:" + e.getMessage());
+	    System.err.println("Something went wrong:" + e.getLocalizedMessage());
 	}
     }
 
     private static void inputName(Contact contact, PhoneBook phoneBook, Scanner strScan) {
-	String name = "";
+	String name = StringConstants.EMPTY;
 
 	do {
 	    System.out.print("Name: ");
@@ -89,7 +89,7 @@ public class PhoneBookMain {
     }
 
     private static void inputPhone(Contact contact, PhoneBook phoneBook, Scanner strScan) {
-	String phone = "";
+	String phone = StringConstants.EMPTY;
 
 	do {
 	    System.out.print("Phone number: ");
@@ -100,7 +100,7 @@ public class PhoneBookMain {
     }
 
     private static void inputCity(Contact contact, PhoneBook phoneBook, Scanner strScan) {
-	String city = "";
+	String city = StringConstants.EMPTY;
 
 	System.out.print("City: ");
 	city = strScan.nextLine();

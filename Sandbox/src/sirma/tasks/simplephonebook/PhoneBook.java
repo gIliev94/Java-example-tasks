@@ -80,7 +80,7 @@ public class PhoneBook implements IPhoneBook {
      *            - the contact to be printed.
      */
     private void printFormatedContactInformation(Contact contact) {
-	String printCity = "";
+	String printCity = StringConstants.EMPTY;
 
 	if (!contact.getCity().equals("")) {
 	    printCity = "(" + contact.getCity() + ")";

@@ -33,11 +33,11 @@ public class CriteriaComparator implements Comparator<Contact> {
 	case "city":
 	    result = (c1.getCity()).compareToIgnoreCase(c2.getCity());
 
-	    if (c1.getCity().equals("")) {
+	    if (c1.getCity().equals(StringConstants.EMPTY)) {
 		result = 1;
 	    }
 
-	    if (c2.getCity().equals("")) {
+	    if (c2.getCity().equals(StringConstants.EMPTY)) {
 		result = -1;
 	    }
 

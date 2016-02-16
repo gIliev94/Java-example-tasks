@@ -45,7 +45,7 @@ public class ContactValidator {
      *         <b>one</b> is missing.
      */
     private static boolean checkForNamePhone(Contact contact) {
-	if (contact.getName().equals("") || contact.getPhone().equals("")) {
+	if (contact.getName().equals(StringConstants.EMPTY) || contact.getPhone().equals(StringConstants.EMPTY)) {
 	    contact.errors.add("Error: You have to input both name and phone!");
 	    return false;
 	}
